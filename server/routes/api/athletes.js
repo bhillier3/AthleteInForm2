@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 // POST create a new athlete
 router.post('/', (req, res) => {
   Athlete.create(req.body)
-    .then(athlete => res.json({ msg: 'Athlete added successfully' }))
+    .then(athlete => res.json({ msg: `${athlete.firstname} ${athlete.lastname} added successfully` }))
     .catch(err => res.status(404).json({ error: 'Unable to add athlete' }));
 });
 
