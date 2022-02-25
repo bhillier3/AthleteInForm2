@@ -7,9 +7,9 @@ const AddAthlete = (props) => {
   const [lastname, setLastname] = useState('');
   const [email, setEmail] = useState('');
 
-  const handleFnameChange = e => { setFirstname(e.target.value) };
-  const handleLnameChange = e => { setLastname(e.target.value) };
-  const handleEmailChange = e => { setEmail(e.target.value) };
+  const handleFnameChange = e => setFirstname(e.target.value);
+  const handleLnameChange = e => setLastname(e.target.value);
+  const handleEmailChange = e => setEmail(e.target.value);
 
 
   const handleSubmit = e => {
@@ -18,8 +18,7 @@ const AddAthlete = (props) => {
     const data = {
       firstname: firstname,
       lastname: lastname,
-      email: email,
-      forms: []
+      email: email
     };
 
     axios

@@ -1,32 +1,26 @@
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
-
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
+const bodyParser = require('body-parser');
+const { errorHandler } = require('./middleware/errorMiddleware')
+const connectDB = require('./config/db')
 
-// routes
-const athletes = require('./routes/api/athletes');
+connectDB()
 
 const app = express();
 
-// connect with MongoDB
-mongoose.connect(process.env.MONGO_URI);
-const db = mongoose.connection;
-db.on('error', error => console.error(error));
-db.once('open', () => console.log('Connected to MongoDB...'));
-
-// cors
+// middleware
 app.use(cors({ origin: '*', credentials: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-// Init middleware
-app.use(express.json({ extended: false }));
+// routes
+app.use('/api/athletes', require('./routes/athletes'));
+app.use('/api/forms', require('./routes/forms'));
 
-app.get('/', (req, res) => res.send('Hello World! I am Server!'));
-
-// use Routes
-app.use('/api/athletes', athletes);
+app.use(errorHandler)
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Server running on port ${port}`));
